@@ -278,11 +278,11 @@ __global__ void bilateral_cuda_backward_kernel(
 }
 
 
-std::vector<at::Tensor> bilateral_cuda_forward(at::Tensor input, at::Tensor sigma_v, at::Tensor sigma_s) {
+std::vector<at::Tensor> bilateral_cuda_forward(at::Tensor input, int kernel_size, at::Tensor sigma_v, at::Tensor sigma_s) {
     const int batch_size = input.size(0);
     const int channels = input.size(1);
     const int side_len = input.size(2);
-    const int window_size = 5;
+    const int window_size = kernel_size;
     const int radius = window_size / 2;
 
 
@@ -320,12 +320,12 @@ std::vector<at::Tensor> bilateral_cuda_forward(at::Tensor input, at::Tensor sigm
 }
 
 
-std::vector<at::Tensor> bilateral_cuda_backward(at::Tensor grad_output, at::Tensor input, at::Tensor sigma_v,
+std::vector<at::Tensor> bilateral_cuda_backward(at::Tensor grad_output, at::Tensor input, int kernel_size, at::Tensor sigma_v,
                                                 at::Tensor sigma_s, at::Tensor numerator, at::Tensor denominator) {
     const int batch_size = input.size(0);
     const int channels = input.size(1);
     const int side_len = input.size(2);
-    const int window_size = 5;
+    const int window_size = kernel_size;
     const int radius = window_size / 2;
 
 
